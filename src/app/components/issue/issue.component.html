@@ -1,0 +1,16 @@
+<div class="issue +openstatus+">,
+  <p class="id">id: +ele._id+</p>,
+  <h3>+ele.issue_title+ -  (+openstatus+)</h3>,
+  <br>,
+  <p>+ele.issue_text+</p>,
+  <p>+ele.status_text+</p>,
+  <br>,
+  <p class="id"><b>Created by:</b> +ele.created_by+  <b>Assigned to:</b> +ele.assigned_to,
+  <p class="id"><b>Created on:</b> + ele.created_on.substring(0,10)
++  <b>Last updated:</b> ele.updated_on.substring(0,10),
+  <br><a href="#" class="closeIssue" id="+ele._id+">close?</a> <a href="#" class="deleteIssue" id="+ele._id+">delete?</a>,
+  <button type="button" class="btn btn-primary">Edit</button>
+<button type="button" class="btn btn-warning">Close</button>
+<button type="button" class="btn btn-danger">Delete</button>
+</div>
+  
