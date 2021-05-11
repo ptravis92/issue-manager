@@ -1,8 +1,7 @@
 <div class="card">
   <div class="card-body pb-0">
     <h5 class="card-title">{{issue?.issue_title}}</h5>
-    <h6 class="card-title"
-        [ngClass]="{'text-success': issue?.open}"
+    <h6 class="card-title text-success"
         [ngClass]="{'text-danger': !issue?.open}">{{issue?.open ? 'open' : 'closed'}}</h6>
     <span class="card-text">{{issue?.issue_text}}</span>
     <p class="card-subtitle mb-2 text-muted mt-1">Status: {{issue?.status_text}}</p>
@@ -10,6 +9,7 @@
       <button type="button"
               class="btn btn-sm btn-primary col-auto">Edit</button>
       <button type="button"
+              (click)="closeIssue()"
               class="btn btn-sm btn-warning col-auto">Close</button>
       <button type="button"
               class="btn btn-sm btn-danger col-auto">Delete</button>

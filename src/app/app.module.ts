@@ -8,11 +8,14 @@ import { RouterModule } from '@angular/router';
 import { routes } from './routes';
 import { ProjectComponent } from './components/project/project.component';
 import { IssueComponent } from './components/issue/issue.component';
+import { AddIssueComponent } from './components/add-issue/add-issue.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProjectComponent,
+    AddIssueComponent,
     IssueComponent
   ],
   imports: [
@@ -20,6 +23,8 @@ import { IssueComponent } from './components/issue/issue.component';
     HttpClientModule,
     AppRoutingModule,
     RouterModule.forRoot(routes),
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

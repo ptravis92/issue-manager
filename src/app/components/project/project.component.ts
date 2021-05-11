@@ -22,7 +22,7 @@ export class ProjectComponent implements OnInit {
   }
 
   getProject(): void {
-    const projectName = this.route.snapshot.params['projectName'];
+    const projectName = this.route.snapshot.params.projectName;
     this.projectService.getProject(projectName)
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(project => {

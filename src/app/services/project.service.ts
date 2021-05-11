@@ -16,15 +16,15 @@ export class ProjectService {
     return this.http.get<Project>(`${this.baseURL}/${project}`);
   }
 
-  addIssue(project: string, issue: Issue): Observable<any> {
-    return this.http.post<Issue>(`${this.baseURL}/${project}`, issue)
-      .pipe(
-      );
+  addIssue(project: string, issue: Issue): Observable<Issue> {
+    return this.http.post<Issue>(`${this.baseURL}/${project}`, issue);
   }
 
-  updateIssue(project: string, issue: Issue): Observable<any> {
-    return this.http.put<Issue>(`${this.baseURL}/${project}`, issue)
-      .pipe();
+  updateIssue(project: string, data: FormData): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }), responseType: 'text'
+    };
+    return this.http.put<any>(`${this.baseURL}/${project}`, data, { responseType: 'text' as 'json' });
   }
 
   deleteIssue(project: string, id: number): Observable<{}> {
