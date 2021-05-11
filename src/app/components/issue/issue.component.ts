@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Issue } from 'src/app/models/Issue';
 
 @Component({
   selector: 'app-issue',
@@ -6,10 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./issue.component.css']
 })
 export class IssueComponent implements OnInit {
-
+  @Input() issue!: Issue;
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
 }

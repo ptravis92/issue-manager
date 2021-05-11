@@ -1,3 +1,11 @@
-<p>
-  project works!
-</p>
+<div>
+  <h1>Project: {{project._id.projectName}}</h1>
+  <hr />
+  <div class="row">
+    <div *ngFor="let issue of project.projectIssues"
+         class="col-md-5">
+      <app-issue (click)="handleThumbnailClick(event.name)"
+                 [issue]="issue"></app-issue>
+    </div>
+  </div>
+</div>
