@@ -9,7 +9,7 @@ import { Issue } from '../models/Issue';
 })
 export class ProjectService {
 
-  baseURL = 'https://boilerplate-project-issuetracker.ptravis92.repl.co/api/issues/';
+  baseURL = 'https://boilerplate-project-issuetracker.ptravis92.repl.co/api/issues';
   constructor(private http: HttpClient) { }
 
   getProject(project: string): Observable<Project> {
@@ -28,10 +28,11 @@ export class ProjectService {
   }
 
   deleteIssue(project: string, id: number): Observable<{}> {
-    return this.http.delete(`${this.baseURL}/${project}`, new RequestOptions({
-      // headers: headers,
-      body: { id }
-    }))
-      .pipe();
+
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }), body: { id }
+    };
+
+    return this.http.delete(`${this.baseURL}/${project}`, httpOptions);
   }
 }

@@ -4,8 +4,7 @@
   <div class="row">
     <div *ngFor="let issue of project.projectIssues"
          class="col-md-5">
-      <app-issue (click)="handleThumbnailClick(event.name)"
-                 [issue]="issue"></app-issue>
+      <app-issue [issue]="issue"></app-issue>
     </div>
   </div>
 </div>
