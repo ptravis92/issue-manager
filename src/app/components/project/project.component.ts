@@ -4,6 +4,7 @@ import { takeUntil } from 'rxjs/operators';
 import { ProjectService } from 'src/app/services/project.service';
 import { Subject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-project',
@@ -12,10 +13,11 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ProjectComponent implements OnInit {
   public project!: Project;
+  public newIssuelink!: string;
 
   unsubscribe: Subject<void> = new Subject();
 
-  constructor(private projectService: ProjectService, private route: ActivatedRoute) { }
+  constructor(private projectService: ProjectService, private route: ActivatedRoute, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.getProject();
@@ -28,12 +30,13 @@ export class ProjectComponent implements OnInit {
       .subscribe(project => {
         if (project) {
           this.project = project;
-          console.log(project);
+          this.newIssuelink = `project/${this.project._id.projectName}/issues/add`;
+          console.log(this.newIssuelink);
         } else {
-          console.log('Project not found!');
+          this.toastr.error('Project not found!');
         }
       }, error => {
-        console.log('Project not found!');
+        this.toastr.error('Project not found!');
       });
   }
 }

@@ -1,6 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Issue } from 'src/app/models/Issue';
@@ -15,7 +16,12 @@ export class IssueComponent implements OnInit {
   @Input() issue!: Issue;
   unsubscribe: Subject<void> = new Subject();
   projectName = this.route.snapshot.params.projectName;
-  constructor(private projectService: ProjectService, private route: ActivatedRoute, private router: Router) { }
+  constructor(
+    private projectService: ProjectService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private toastr: ToastrService
+  ) { }
 
   ngOnInit(): void {
   }
@@ -29,12 +35,14 @@ export class IssueComponent implements OnInit {
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(result => {
         if (result) {
-          console.log(result);
+          this.router.navigate([`/project/${this.projectName}`]).then(() => {
+            this.toastr.success(result);
+          });
         } else {
-          console.log('Error!');
+          this.toastr.error('Error!');
         }
       }, error => {
-        console.log(error);
+        this.toastr.error(error);
       });
   }
 
@@ -43,12 +51,14 @@ export class IssueComponent implements OnInit {
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(result => {
         if (result) {
-          console.log(result);
+          this.router.navigate([`/project/${this.projectName}`]).then(() => {
+            this.toastr.success(result);
+          });
         } else {
-          console.log('Error!');
+          this.toastr.error('Error!');
         }
       }, error => {
-        console.log(error);
+        this.toastr.error(error);
       });
   }
 

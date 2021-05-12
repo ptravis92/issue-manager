@@ -2,6 +2,7 @@ import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Observable, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { Issue } from 'src/app/models/Issue';
@@ -10,7 +11,7 @@ import { ProjectService } from 'src/app/services/project.service';
 @Component({
   selector: 'app-add-issue',
   templateUrl: './add-issue.component.html',
-  styleUrls: ['./add-issue.component.scss']
+  styleUrls: ['./add-issue.component.css']
 })
 export class AddIssueComponent implements OnInit {
   unsubscribe: Subject<void> = new Subject();
@@ -25,7 +26,11 @@ export class AddIssueComponent implements OnInit {
     status_text: new FormControl('')
   });
 
-  constructor(private projectService: ProjectService, private route: ActivatedRoute, private router: Router) {
+  constructor(
+    private projectService: ProjectService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private toastr: ToastrService) {
   }
 
   ngOnInit(): void {
@@ -42,31 +47,31 @@ export class AddIssueComponent implements OnInit {
           const issue: Issue | null = project.projectIssues.find(x => x._id === this.id) || null;
           if (issue) { this.form.patchValue(issue); }
         } else {
-          console.log('Issue not found!');
+          this.toastr.error('Issue not found!');
         }
       }, error => {
-        console.log('Issue not found!');
+        this.toastr.error(error);
       });
   }
 
   addIssue(): void {
-    console.log(this.form.value as Issue);
     this.projectService.addIssue(this.projectName, this.form.value as Issue)
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(result => {
         if (result) {
-          console.log(result);
+          this.router.navigate([`/project/${this.projectName}`]).then(() => {
+            this.toastr.success('Issue Added!');
+          });
         } else {
-          console.log('Error!');
+          this.toastr.error('Error!');
         }
       }, error => {
-        console.log('Error!');
+        this.toastr.error(error);
       });
   }
 
   updateIssue(): void {
     const form = this.form.value;
-    console.log(form);
     const data = new HttpParams()
       .set('_id', this.id)
       .set('issue_title', form.issue_title)
@@ -74,18 +79,18 @@ export class AddIssueComponent implements OnInit {
       .set('created_by', form.created_by)
       .set('assigned_to', form.assigned_to)
       .set('status_text', form.status_text);
-    console.log(form);
-    console.log(data);
     this.projectService.updateIssue(this.projectName, data)
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(result => {
         if (result) {
-          console.log(result);
+          this.router.navigate([`/project/${this.projectName}`]).then(() => {
+            this.toastr.success(result);
+          });
         } else {
-          console.log('Error!');
+          this.toastr.error('Error!');
         }
       }, error => {
-        console.log(error);
+        this.toastr.error(error);
       });
   }
 }

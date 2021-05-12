@@ -15,7 +15,7 @@
     </div>
     <hr class="mt-1" />
     <div class="row justify-content-start mt-2 mb-3">
-      <span class="card-text">{{issue?.issue_text}}</span>
+      <span class="card-text">{{issue?.issue_text| slice:0:200}}<span *ngIf="issue.issue_text.length > 200">...</span></span>
     </div>
     <div class="row justify-content-start mb-1 mt-2">
       <button type="button"

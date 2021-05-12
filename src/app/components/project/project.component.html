@@ -1,5 +1,6 @@
 <div>
-  <h1>Project: {{project?._id?.projectName}}</h1>
+  <h1>Project: {{project?._id?.projectName}}<a href="{{newIssuelink}}"
+       class="btn btn-success float-right mt-3">New Issue</a></h1>
   <hr />
   <div class="row">
     <div *ngFor="let issue of project?.projectIssues"
