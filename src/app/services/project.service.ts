@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Project } from '../models/Project';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Issue } from '../models/Issue';
 
 @Injectable({
@@ -21,17 +21,18 @@ export class ProjectService {
   }
 
   updateIssue(project: string, data: any): Observable<any> {
-    const httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' }), responseType: 'text'
-    };
     return this.http.put<any>(`${this.baseURL}/${project}`, data, { responseType: 'text' as 'json' });
   }
 
-  deleteIssue(project: string, id: number): Observable<{}> {
+  deleteIssue(project: string, id: string): Observable<any> {
 
+    const data = new HttpParams()
+      .set('_id', id);
     const httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' }), body: { id }
+      headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' }), responseType: 'text' as 'json', body: data
     };
+
+
 
     return this.http.delete(`${this.baseURL}/${project}`, httpOptions);
   }

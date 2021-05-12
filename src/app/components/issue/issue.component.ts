@@ -40,4 +40,20 @@ export class IssueComponent implements OnInit {
         console.log(error);
       });
   }
+
+  deleteIssue(): void {
+    const projectName = this.route.snapshot.params.projectName;
+
+    this.projectService.deleteIssue(projectName, this.issue._id)
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(result => {
+        if (result) {
+          console.log(result);
+        } else {
+          console.log('Error!');
+        }
+      }, error => {
+        console.log(error);
+      });
+  }
 }
