@@ -1,3 +1,4 @@
+import { HttpParams } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -20,10 +21,10 @@ export class IssueComponent implements OnInit {
   }
 
   closeIssue(): void {
-    // { : ,  }
-    const data = new FormData();
-    data.set('_id', this.issue._id);
-    data.set('open', false);
+
+    const data = new HttpParams()
+      .set('_id', this.issue._id)
+      .set('open', 'false');
 
     const projectName = this.route.snapshot.params.projectName;
 

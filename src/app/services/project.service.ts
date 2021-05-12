@@ -20,9 +20,9 @@ export class ProjectService {
     return this.http.post<Issue>(`${this.baseURL}/${project}`, issue);
   }
 
-  updateIssue(project: string, data: FormData): Observable<any> {
+  updateIssue(project: string, data: any): Observable<any> {
     const httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' }), responseType: 'text'
+      headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' }), responseType: 'text'
     };
     return this.http.put<any>(`${this.baseURL}/${project}`, data, { responseType: 'text' as 'json' });
   }
