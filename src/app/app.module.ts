@@ -13,13 +13,15 @@ import { IssueComponent } from './components/issue/issue.component';
 import { AddIssueComponent } from './components/add-issue/add-issue.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
+import { NavComponent } from './components/nav/nav.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProjectComponent,
     AddIssueComponent,
-    IssueComponent
+    IssueComponent,
+    NavComponent
   ],
   imports: [
     BrowserModule,

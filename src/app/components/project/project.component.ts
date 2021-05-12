@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Project } from 'src/app/models/Project';
 import { takeUntil } from 'rxjs/operators';
 import { ProjectService } from 'src/app/services/project.service';
@@ -13,7 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ProjectComponent implements OnInit {
   public project!: Project;
-  public newIssuelink!: string;
+  @Output() projectName: EventEmitter<string> = new EventEmitter<string>();
 
   unsubscribe: Subject<void> = new Subject();
 
@@ -25,13 +25,12 @@ export class ProjectComponent implements OnInit {
 
   getProject(): void {
     const projectName = this.route.snapshot.params.projectName;
+    this.projectName.emit(projectName);
     this.projectService.getProject(projectName)
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(project => {
         if (project) {
           this.project = project;
-          this.newIssuelink = `project/${this.project._id.projectName}/issues/add`;
-          console.log(this.newIssuelink);
         } else {
           this.toastr.error('Project not found!');
         }
