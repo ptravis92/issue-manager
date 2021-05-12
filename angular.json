@@ -125,5 +125,8 @@
       }
     }
   },
-  "defaultProject": "issue-manager"
+  "defaultProject": "issue-manager",
+  "cli": {
+    "analytics": "7b98e370-fc11-4cee-81eb-51e03163fbe8"
+  }
 }
