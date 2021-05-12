@@ -1,6 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Issue } from 'src/app/models/Issue';
@@ -14,21 +14,18 @@ import { ProjectService } from 'src/app/services/project.service';
 export class IssueComponent implements OnInit {
   @Input() issue!: Issue;
   unsubscribe: Subject<void> = new Subject();
-
-  constructor(private projectService: ProjectService, private route: ActivatedRoute) { }
+  projectName = this.route.snapshot.params.projectName;
+  constructor(private projectService: ProjectService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
   }
 
   closeIssue(): void {
-
     const data = new HttpParams()
       .set('_id', this.issue._id)
       .set('open', 'false');
 
-    const projectName = this.route.snapshot.params.projectName;
-
-    this.projectService.updateIssue(projectName, data)
+    this.projectService.updateIssue(this.projectName, data)
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(result => {
         if (result) {
@@ -42,9 +39,7 @@ export class IssueComponent implements OnInit {
   }
 
   deleteIssue(): void {
-    const projectName = this.route.snapshot.params.projectName;
-
-    this.projectService.deleteIssue(projectName, this.issue._id)
+    this.projectService.deleteIssue(this.projectName, this.issue._id)
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(result => {
         if (result) {
@@ -55,5 +50,11 @@ export class IssueComponent implements OnInit {
       }, error => {
         console.log(error);
       });
+  }
+
+  editIssue(): void {
+    // const editRoute = this.router.config.find(r => r.path === `project/${this.projectName}/issues/edit`);
+    // editRoute.data = { issue: this.issue };
+    this.router.navigateByUrl(`project/${this.projectName}/issues/edit/${this.issue._id}`);
   }
 }

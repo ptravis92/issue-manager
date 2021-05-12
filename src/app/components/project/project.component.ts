@@ -17,7 +17,7 @@ export class ProjectComponent implements OnInit {
 
   constructor(private projectService: ProjectService, private route: ActivatedRoute) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getProject();
   }
 
@@ -34,6 +34,6 @@ export class ProjectComponent implements OnInit {
         }
       }, error => {
         console.log('Project not found!');
-      })
+      });
   }
 }

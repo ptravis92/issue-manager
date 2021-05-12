@@ -1,6 +1,5 @@
 <form [formGroup]="form"
-      (ngSubmit)="addIssue()"
-      style="width:75%;">
+      style="width:60%;">
   <div class="form-row">
     <div class="col-md-6 mb-3">
       <label for="issue_title">Title</label>
@@ -42,6 +41,10 @@
              value="">
     </div>
   </div>
-  <button class="btn btn-primary"
-          type="submit">Submit Issue</button>
+  <button *ngIf="!id"
+          class="btn btn-primary"
+          (click)="addIssue()">Submit Issue</button>
+  <button *ngIf="id"
+          class="btn btn-primary"
+          (click)="updateIssue()">Update Issue</button>
 </form>
