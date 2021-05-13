@@ -1,5 +1,5 @@
 import { HttpParams } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
@@ -12,7 +12,7 @@ import { ProjectService } from 'src/app/services/project.service';
   templateUrl: './issue.component.html',
   styleUrls: ['./issue.component.css']
 })
-export class IssueComponent implements OnInit {
+export class IssueComponent implements OnInit, OnDestroy {
   @Input() issue!: Issue;
   public unsubscribe: Subject<void> = new Subject();
   public projectName = this.route.snapshot.params.projectName;
@@ -28,6 +28,11 @@ export class IssueComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  ngOnDestroy(): void {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
+  }
+
   closeIssue(): void {
     const data = new HttpParams()
       .set('_id', this.issue._id)
@@ -37,8 +42,8 @@ export class IssueComponent implements OnInit {
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(result => {
         if (result) {
-            this.issue.open = false;
-            this.toastr.success(result);
+          this.issue.open = false;
+          this.toastr.success(result);
         } else {
           this.toastr.error('Error!');
         }
@@ -52,8 +57,8 @@ export class IssueComponent implements OnInit {
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(result => {
         if (result) {
-            this.show = false;
-            this.toastr.success(result);
+          this.show = false;
+          this.toastr.success(result);
         } else {
           this.toastr.error('Error!');
         }

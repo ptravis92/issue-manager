@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { Project } from 'src/app/models/Project';
 import { takeUntil } from 'rxjs/operators';
 import { ProjectService } from 'src/app/services/project.service';
@@ -11,7 +11,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './project.component.html',
   styleUrls: ['./project.component.css']
 })
-export class ProjectComponent implements OnInit {
+export class ProjectComponent implements OnInit, OnDestroy {
   public project!: Project;
   @Output() projectName: EventEmitter<string> = new EventEmitter<string>();
 
@@ -21,6 +21,11 @@ export class ProjectComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProject();
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
   }
 
   getProject(): void {
@@ -35,7 +40,7 @@ export class ProjectComponent implements OnInit {
           this.toastr.error('Project not found!');
         }
       }, error => {
-        this.toastr.error('Project not found!');
+        this.toastr.error(error);
       });
   }
 }

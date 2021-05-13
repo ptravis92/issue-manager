@@ -1,5 +1,5 @@
 import { HttpParams } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -13,7 +13,7 @@ import { ProjectService } from 'src/app/services/project.service';
   templateUrl: './add-issue.component.html',
   styleUrls: ['./add-issue.component.css']
 })
-export class AddIssueComponent implements OnInit {
+export class AddIssueComponent implements OnInit, OnDestroy {
   unsubscribe: Subject<void> = new Subject();
   id: string = this.route.snapshot.params.id || null;
   projectName = this.route.snapshot.params.projectName;
@@ -37,6 +37,11 @@ export class AddIssueComponent implements OnInit {
     if (this.id) {
       this.getIssue();
     }
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
   }
 
   getIssue(): void {
