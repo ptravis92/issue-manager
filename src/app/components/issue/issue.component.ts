@@ -14,8 +14,10 @@ import { ProjectService } from 'src/app/services/project.service';
 })
 export class IssueComponent implements OnInit {
   @Input() issue!: Issue;
-  unsubscribe: Subject<void> = new Subject();
-  projectName = this.route.snapshot.params.projectName;
+  public unsubscribe: Subject<void> = new Subject();
+  public projectName = this.route.snapshot.params.projectName;
+  public show = true;
+
   constructor(
     private projectService: ProjectService,
     private route: ActivatedRoute,
@@ -35,9 +37,8 @@ export class IssueComponent implements OnInit {
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(result => {
         if (result) {
-          this.router.navigate([`/project/${this.projectName}`]).then(() => {
+            this.issue.open = false;
             this.toastr.success(result);
-          });
         } else {
           this.toastr.error('Error!');
         }
@@ -51,9 +52,8 @@ export class IssueComponent implements OnInit {
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(result => {
         if (result) {
-          this.router.navigate([`/project/${this.projectName}`]).then(() => {
+            this.show = false;
             this.toastr.success(result);
-          });
         } else {
           this.toastr.error('Error!');
         }

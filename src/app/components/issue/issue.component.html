@@ -1,4 +1,4 @@
-<div class="card bg-light">
+<div *ngIf="show" class="card bg-light">
   <div class="card-header">
     <h5 class="card-title">{{issue?.issue_title}} | <span class="text-success small"
             [ngClass]="{'text-danger': !issue?.open}">{{issue?.open ? 'open' : 'closed'}}</span></h5>
@@ -22,6 +22,7 @@
               (click)="editIssue()"
               class="btn btn-sm btn-primary col-auto mr-2">Edit</button>
       <button type="button"
+              *ngIf="issue.open"
               (click)="closeIssue()"
               class="btn btn-sm btn-warning col-auto mr-2">Close</button>
       <button type="button"
