@@ -1,6 +1,7 @@
 # IssueManager
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.6.
+See deployed version at https://ptravis92.github.io/issue-manager/
 
 ## Development server
 
