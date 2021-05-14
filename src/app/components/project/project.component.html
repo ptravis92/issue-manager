@@ -2,6 +2,8 @@
   <!-- <h1>Project: {{project?._id?.projectName}}</h1>
   <hr /> -->
   <div class="row">
+    <ngx-spinner>
+    </ngx-spinner>
     <div *ngFor="let issue of project?.projectIssues"
          class="col-md-6 mt-3">
       <app-issue [issue]="issue"></app-issue>

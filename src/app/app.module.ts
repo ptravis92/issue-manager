@@ -14,6 +14,7 @@ import { AddIssueComponent } from './components/add-issue/add-issue.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 import { NavComponent } from './components/nav/nav.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { NavComponent } from './components/nav/nav.component';
     RouterModule.forRoot(routes),
     FormsModule,
     ReactiveFormsModule,
+    NgxSpinnerModule,
     ToastrModule.forRoot({
       timeOut: 10000,
       positionClass: 'toast-bottom-right',

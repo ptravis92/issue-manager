@@ -5,6 +5,7 @@ import { ProjectService } from 'src/app/services/project.service';
 import { Subject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-project',
@@ -17,7 +18,11 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
   unsubscribe: Subject<void> = new Subject();
 
-  constructor(private projectService: ProjectService, private route: ActivatedRoute, private toastr: ToastrService) { }
+  constructor(
+    private projectService: ProjectService,
+    private route: ActivatedRoute,
+    private toastr: ToastrService,
+    private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
     this.getProject();
@@ -29,6 +34,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
   }
 
   getProject(): void {
+    this.spinner.show();
     const projectName = this.route.snapshot.params.projectName;
     this.projectName.emit(projectName);
     this.projectService.getProject(projectName)
@@ -39,8 +45,10 @@ export class ProjectComponent implements OnInit, OnDestroy {
         } else {
           this.toastr.error('Project not found!');
         }
+        this.spinner.hide();
       }, error => {
-        this.toastr.error(error);
+        this.toastr.error('Error retrieving project! Please refresh.');
+        this.spinner.hide();
       });
   }
 }
