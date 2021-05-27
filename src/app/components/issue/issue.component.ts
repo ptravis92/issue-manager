@@ -17,6 +17,7 @@ export class IssueComponent implements OnInit, OnDestroy {
   public unsubscribe: Subject<void> = new Subject();
   public projectName = this.route.snapshot.params.projectName;
   public show = true;
+  public fullText = false;
 
   constructor(
     private projectService: ProjectService,

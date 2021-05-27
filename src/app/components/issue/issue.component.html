@@ -1,4 +1,5 @@
-<div *ngIf="show" class="card bg-light">
+<div *ngIf="show"
+     class="card bg-light">
   <div class="card-header">
     <h5 class="card-title">{{issue?.issue_title}} | <span class="text-success small"
             [ngClass]="{'text-danger': !issue?.open}">{{issue?.open ? 'open' : 'closed'}}</span></h5>
@@ -15,7 +16,10 @@
     </div>
     <hr class="mt-1" />
     <div class="row justify-content-start mt-2 mb-3">
-      <span class="card-text">{{issue?.issue_text| slice:0:200}}<span *ngIf="issue.issue_text.length > 200">...</span></span>
+      <span class="card-text"
+            (click)="fullText = !fullText">{{ fullText ? issue?.issue_text :
+        issue?.issue_text?.slice(0,200)?.trim()}}<span
+              *ngIf="issue.issue_text.length > 200 && fullText === false">...</span></span>
     </div>
     <div class="row justify-content-start mb-1 mt-2">
       <button type="button"
